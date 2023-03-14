@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import androidx.work.*
 import com.example.noteapp.Adapter.NotesAdapter
 import com.example.noteapp.Models.NoteViewModel
@@ -20,11 +21,12 @@ import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity() {
     lateinit var viewModel: NoteViewModel
+    lateinit var notesAdapter: NotesAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         periodicRequest()
-        recycler_view.layoutManager = LinearLayoutManager(this)
+        recycler_view.layoutManager = StaggeredGridLayoutManager(2,LinearLayoutManager.VERTICAL)
         val adaptor = NotesAdapter(this)
         recycler_view.adapter = adaptor
         viewModel = ViewModelProvider(this)[NoteViewModel::class.java]
