@@ -1,9 +1,9 @@
-package com.example.noteapp.Database
+package com.example.noteapp.database
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
 
-import com.example.noteapp.Models.Notes
+import com.example.noteapp.models.Notes
 
 @Dao
 abstract class NoteDao {

@@ -1,40 +1,41 @@
 package com.example.noteapp
 
 import android.content.Intent
-import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.get
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import androidx.work.*
-import com.example.noteapp.Adapter.NotesAdapter
-import com.example.noteapp.Models.NoteViewModel
-import com.example.noteapp.Models.Notes
-import com.example.noteapp.Worker.ReminderWorker
+import com.example.noteapp.adapter.NotesAdapter
+import com.example.noteapp.models.NoteViewModel
+import com.example.noteapp.models.Notes
+import com.example.noteapp.worker.ReminderWorker
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.concurrent.TimeUnit
 
 
 class MainActivity : AppCompatActivity() {
     lateinit var viewModel: NoteViewModel
-    lateinit var notesAdapter: NotesAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         periodicRequest()
-        recycler_view.layoutManager = StaggeredGridLayoutManager(2,LinearLayoutManager.VERTICAL)
-        val adaptor = NotesAdapter(this)
+        recycler_view.layoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
+        val adaptor = NotesAdapter()
         recycler_view.adapter = adaptor
         viewModel = ViewModelProvider(this)[NoteViewModel::class.java]
-        viewModel.allNotes.observe(this) {
-            adaptor.updateData(it)
+        viewModel.getNotes().observe(this) {
+            adaptor.submitList(it)
             updateUI(it)
         }
-        ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+        ItemTouchHelper(object :
+            ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
             override fun onMove(
                 recyclerView: RecyclerView,
                 viewHolder: RecyclerView.ViewHolder,
@@ -74,8 +75,8 @@ class MainActivity : AppCompatActivity() {
                 ReminderWorker::class.java,
                 60,
                 TimeUnit.MINUTES)
-            .addTag("my_id")
-            .build()
+                .addTag("my_id")
+                .build()
         WorkManager.getInstance(this)
             .enqueueUniquePeriodicWork("my_id", ExistingPeriodicWorkPolicy.KEEP, myWorkRequest)
 

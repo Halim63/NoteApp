@@ -1,9 +1,8 @@
-package com.example.noteapp.Database
+package com.example.noteapp.database
 
-import androidx.lifecycle.LiveData
-import com.example.noteapp.Models.Notes
+import com.example.noteapp.models.Notes
 
-class NoteRepository(private val noteDao:NoteDao) {
+class NoteRepository(private val noteDao: NoteDao) {
     val allNotes = noteDao.getAllNotes()
 
     suspend fun insert(note: Notes){

@@ -7,8 +7,8 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import androidx.lifecycle.ViewModelProvider
-import com.example.noteapp.Models.NoteViewModel
-import com.example.noteapp.Models.Notes
+import com.example.noteapp.models.NoteViewModel
+import com.example.noteapp.models.Notes
 import kotlinx.android.synthetic.main.activity_add_note.*
 
 class AddNote : AppCompatActivity() {

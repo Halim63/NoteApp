@@ -1,4 +1,4 @@
-package com.example.noteapp.Worker
+package com.example.noteapp.worker
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -9,12 +9,9 @@ import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.work.*
 import com.example.noteapp.AddNote
-import com.example.noteapp.MainActivity
 import com.example.noteapp.R
-import java.util.concurrent.TimeUnit
 
 class ReminderWorker(
     context: Context,
