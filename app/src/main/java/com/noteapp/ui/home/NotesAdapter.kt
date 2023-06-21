@@ -1,4 +1,4 @@
-package com.example.noteapp.adapter
+package com.noteapp.ui.home
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,12 +8,12 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.noteapp.models.Notes
+import com.noteapp.models.NotesEntity
 import com.example.noteapp.R
 import kotlin.random.Random
 
 class NotesAdapter
-    : ListAdapter<Notes, NotesAdapter.NoteViewHolder>(UserDiffUtil()) {
+    : ListAdapter<NotesEntity, NotesAdapter.NoteViewHolder>(UserDiffUtil()) {
 
     class NoteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val notesLayout: CardView? = itemView.findViewById(R.id.card)
@@ -31,13 +31,14 @@ class NotesAdapter
         val currentNote = currentList[position]
         holder.tvTitle?.text = currentNote.title
         holder.tvNote?.text = currentNote.note
-        holder.notesLayout?.setCardBackgroundColor(holder.itemView.resources.getColor(randomColor(),
-            null))
+        holder.notesLayout?.setCardBackgroundColor(
+            holder.itemView.resources.getColor(
+                randomColor(),
+                null
+            )
+        )
     }
 
-    fun getNoteAT(position: Int): Notes {
-        return currentList[position]
-    }
 
     fun randomColor(): Int {
         val list = ArrayList<Int>()
@@ -54,12 +55,12 @@ class NotesAdapter
     }
 }
 
-class UserDiffUtil : DiffUtil.ItemCallback<Notes>() {
-    override fun areItemsTheSame(oldItem: Notes, newItem: Notes): Boolean {
+class UserDiffUtil : DiffUtil.ItemCallback<NotesEntity>() {
+    override fun areItemsTheSame(oldItem: NotesEntity, newItem: NotesEntity): Boolean {
         return oldItem.id == newItem.id
     }
 
-    override fun areContentsTheSame(oldItem: Notes, newItem: Notes): Boolean {
+    override fun areContentsTheSame(oldItem: NotesEntity, newItem: NotesEntity): Boolean {
         return oldItem == newItem
     }
 

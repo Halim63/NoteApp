@@ -1,4 +1,4 @@
-package com.example.noteapp
+package com.noteapp
 
 import org.junit.Test
 
